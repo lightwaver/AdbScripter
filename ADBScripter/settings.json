@@ -1,0 +1,6 @@
+{
+  "AdbPath": "adb\\adb.exe",
+  "DevicesArguments": "devices",
+  "ScriptArguments": "%device%",
+  "ScriptToExecute": "start.cmd"
+}

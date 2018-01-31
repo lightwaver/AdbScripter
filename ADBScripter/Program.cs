@@ -22,17 +22,28 @@ namespace ADBScripter
                 Console.WriteLine("ADB Scripter - 2018 - Stefan M. Marek");
                 Console.WriteLine();
 
-                settings = LoadSettings(settings);
+                settings = LoadSettings();
 
                 Doit();
 
                 Console.WriteLine("press enter to exit...");
                 Console.ReadLine();
                 running = false;
+
+                //SaveSettings();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex);
+            }
+        }
+
+        private static void SaveSettings()
+        {
+            var serializer = new DataContractJsonSerializer(typeof(Settings));
+            using (var sr = new FileStream(settingsFile, FileMode.Create))
+            {
+                serializer.WriteObject(sr, settings);
             }
         }
 
@@ -72,8 +83,9 @@ namespace ADBScripter
 
         }
 
-        private static Settings LoadSettings(Settings settings)
+        private static Settings LoadSettings()
         {
+            Settings settings = null;
             if (File.Exists(settingsFile))
             {
                 var serializer = new DataContractJsonSerializer(typeof(Settings));
